@@ -1,0 +1,13 @@
+{
+  "name": "discord-clone-react-nestjs",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "compose:up": "docker compose -f infra/compose.yml up -d",
+    "compose:down": "docker compose -f infra/compose.yml down -v"
+  }
+}

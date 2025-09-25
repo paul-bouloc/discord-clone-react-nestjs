@@ -1,0 +1,2 @@
+# Forcer les fichiers texte à LF dans le repo
+* text=auto eol=lf

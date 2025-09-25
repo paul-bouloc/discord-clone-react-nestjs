@@ -1,0 +1,74 @@
+# ------------------------------------------------------------------------
+#  EditorConfig – industry-standard defaults for modern TypeScript projects
+#  Docs : https://editorconfig.org
+# ------------------------------------------------------------------------
+root = true                                # ← stop lookup in parent dirs
+
+#--------------------------------------------------------------------------
+#  Global defaults  – apply to every file unless overridden
+#--------------------------------------------------------------------------
+[*]
+charset               = utf-8              # UTF-8 without BOM
+end_of_line           = lf                 # Consistent on all OS
+indent_style          = space
+indent_size           = 2                  # 2-space indentation
+insert_final_newline  = true               # \n at EOF
+trim_trailing_whitespace = true            # strip accidental blanks
+
+#--------------------------------------------------------------------------
+#  Source code (ts, js, jsx, tsx, cjs, mjs)
+#--------------------------------------------------------------------------
+[*.{ts,tsx,js,jsx,cjs,mjs}]
+max_line_length       = 120                # soft-wrap guideline
+# (VS Code et WebStorm le reconnaissent)
+
+#--------------------------------------------------------------------------
+#  JSON & JSON-like (incl. .eslintrc, .prettierrc, tsconfig, package.json)
+#--------------------------------------------------------------------------
+[*.{json,jsonc,json5}]
+indent_size           = 2
+quote_type            = double             # conserve les " standards
+insert_final_newline  = true
+trim_trailing_whitespace = true
+
+#--------------------------------------------------------------------------
+#  YAML – config, GitHub Actions, Helm charts …
+#--------------------------------------------------------------------------
+[*.{yml,yaml}]
+indent_size           = 2
+indent_style          = space
+
+#--------------------------------------------------------------------------
+#  Markdown – préserve les doubles espaces & disable line-wrap limit
+#--------------------------------------------------------------------------
+[*.md]
+trim_trailing_whitespace = false           # garde deux espaces →  <br>
+max_line_length          = off
+
+#--------------------------------------------------------------------------
+#  Shell scripts / Dockerfiles
+#--------------------------------------------------------------------------
+[*.{sh,bash}]
+end_of_line           = lf
+insert_final_newline  = true
+
+[Dockerfile*]
+indent_style          = space
+indent_size           = 2
+
+#--------------------------------------------------------------------------
+#  Makefile – tabs obligatoires
+#--------------------------------------------------------------------------
+[Makefile]
+indent_style          = tab
+indent_size           = 4
+trim_trailing_whitespace = false
+
+#--------------------------------------------------------------------------
+#  Text & misc
+#--------------------------------------------------------------------------
+[*.{txt,env,example,conf}]
+charset               = utf-8
+end_of_line           = lf
+
+# Fin
