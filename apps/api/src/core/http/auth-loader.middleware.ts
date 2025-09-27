@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { NextFunction, Request, Response } from 'express'
 import appConfig from 'src/core/config/app.config'
-import { CookieService } from 'src/core/http/cookies.service'
 import { UserId } from 'src/core/types'
+import { CookieService } from 'src/modules/auth/application/services/cookies.service'
 import { UserRepository } from 'src/modules/users/infrastructure/repositories/user.repository'
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
-import { CookieService } from 'src/core/http/cookies.service'
 import { LoginDto } from 'src/modules/auth/application/dtos/login.dto'
+import { CookieService } from 'src/modules/auth/application/services/cookies.service'
 import { PasswordService } from 'src/modules/auth/application/services/password.service'
 import { UserRepository } from 'src/modules/users/infrastructure/repositories/user.repository'
 
