@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from 'generated/prisma'
 import { PrismaService } from 'src/core/prisma/prisma.service'
+import { UserId } from 'src/core/types'
 import { User } from 'src/modules/users/domain/types'
 import { UserMapper } from 'src/modules/users/infrastructure/mappers/user.mapper'
 
@@ -23,6 +24,14 @@ export class UserRepository {
     })
 
     return this.userMapper.toDomain(createdUser)
+  }
+
+  async findById(id: UserId, opts?: { withPassword?: boolean }): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { userId: id },
+    })
+
+    return user ? this.userMapper.toDomain(user, opts) : null
   }
 
   async findByUserName(userName: string, opts?: { withPassword?: boolean }): Promise<User | null> {

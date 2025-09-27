@@ -5,6 +5,7 @@ const envSchema = z
     DATABASE_URL: z.url(),
     PORT: z.coerce.number().int().positive().default(3000),
     FRONTEND_URL: z.url(),
+    JWT_SECRET: z.string(),
   })
   .catchall(z.unknown())
 
@@ -23,5 +24,6 @@ export default () => {
     port: env.PORT,
     frontendUrl: env.FRONTEND_URL,
     databaseUrl: env.DATABASE_URL,
+    jwtSecret: env.JWT_SECRET,
   } as const
 }

@@ -4,6 +4,7 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { PrismaExceptionFilter } from 'src/core/filters/prisma-exception.filter'
+import { AuthLoaderMiddleware } from 'src/core/http/auth-loader.middleware'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
@@ -20,6 +21,8 @@ async function bootstrap() {
   app.use(compression())
 
   app.useGlobalFilters(new PrismaExceptionFilter(httpAdapter))
+
+  app.use(AuthLoaderMiddleware)
 
   const port = process.env.PORT ?? 3000
   await app.listen(port)

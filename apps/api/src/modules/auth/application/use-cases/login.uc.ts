@@ -1,0 +1,34 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { Response } from 'express'
+import { CookieService } from 'src/core/http/cookies.service'
+import { LoginDto } from 'src/modules/auth/application/dtos/login.dto'
+import { PasswordService } from 'src/modules/auth/application/services/password.service'
+import { UserRepository } from 'src/modules/users/infrastructure/repositories/user.repository'
+
+@Injectable()
+export class LoginUc {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly passwordService: PasswordService,
+    private readonly jwtService: JwtService,
+    private readonly cookieService: CookieService,
+  ) {}
+
+  async execute(dto: LoginDto, res: Response) {
+    const user = await this.userRepository.findByEmail(dto.email)
+    if (!user?.password) {
+      throw new UnauthorizedException('Invalid email or password')
+    }
+
+    const isPasswordValid = await this.passwordService.compare(dto.password, user.password)
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid email or password')
+    }
+
+    const token = await this.jwtService.signAsync({ userId: user.userId })
+    this.cookieService.setSessionCookie(res, token)
+
+    return user
+  }
+}
