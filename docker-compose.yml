@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: discord-clone-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: discord_clone
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - discord-clone-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: discord-clone-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@discord-clone.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - discord-clone-network
+
+volumes:
+  postgres_data:
+
+networks:
+  discord-clone-network:
+    driver: bridge

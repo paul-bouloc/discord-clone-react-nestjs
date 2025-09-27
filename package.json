@@ -7,7 +7,14 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "compose:up": "docker compose -f infra/compose.yml up -d",
-    "compose:down": "docker compose -f infra/compose.yml down -v"
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down postgres",
+    "db:logs": "docker compose logs -f postgres",
+    "db:reset": "docker compose down -v postgres && docker compose up -d postgres",
+    "pgadmin:up": "docker compose up -d pgadmin",
+    "pgadmin:down": "docker compose down pgadmin",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
   }
 }
