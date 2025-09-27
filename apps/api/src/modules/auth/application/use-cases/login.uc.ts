@@ -16,7 +16,9 @@ export class LoginUc {
   ) {}
 
   async execute(dto: LoginDto, res: Response) {
-    const user = await this.userRepository.findByEmail(dto.email)
+    const user = await this.userRepository.findByEmail(dto.email, {
+      withPassword: true,
+    })
     if (!user?.password) {
       throw new UnauthorizedException('Invalid email or password')
     }
@@ -29,6 +31,8 @@ export class LoginUc {
     const token = await this.jwtService.signAsync({ userId: user.userId })
     this.cookieService.setSessionCookie(res, token)
 
-    return user
+    const { password: _password, ...userWithoutPassword } = user
+
+    return userWithoutPassword
   }
 }
