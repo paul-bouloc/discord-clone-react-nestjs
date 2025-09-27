@@ -5,8 +5,8 @@ import { JwtModule } from '@nestjs/jwt'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { AuthGuard } from 'src/core/auth/guards/auth.guard'
 import appConfig from 'src/core/config/app.config'
-import { CookieService } from 'src/core/http/cookies.service'
 import { ZodValidationGuard } from 'src/core/validation'
+import { AuthModule } from 'src/modules/auth/auth.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
@@ -28,11 +28,11 @@ import { AppService } from './app.service'
       secret: appConfig().jwtSecret,
       signOptions: { expiresIn: '1h' },
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    CookieService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

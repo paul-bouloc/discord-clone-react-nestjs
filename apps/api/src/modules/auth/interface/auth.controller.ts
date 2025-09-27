@@ -1,5 +1,6 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
+import { Public } from 'src/core/auth/decorators/public.decorator'
 import { ZodValidate } from 'src/core/validation'
 import { LoginDto } from 'src/modules/auth/application/dtos/login.dto'
 import { RegisterDto } from 'src/modules/auth/application/dtos/register.dto'
@@ -13,12 +14,14 @@ export class AuthController {
     private readonly loginUc: LoginUc,
   ) {}
 
+  @Public()
   @Post('register')
   @ZodValidate(RegisterDto)
   register(@Body() body: RegisterDto) {
     return this.registerUc.execute(body)
   }
 
+  @Public()
   @Post('login')
   @ZodValidate(LoginDto)
   login(@Body() body: LoginDto, @Res({ passthrough: true }) res: Response) {
