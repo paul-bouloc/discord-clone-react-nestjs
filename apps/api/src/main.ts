@@ -1,5 +1,6 @@
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import helmet from 'helmet'
 import { PrismaExceptionFilter } from 'src/core/filters/prisma-exception.filter'
 import { AppModule } from './app.module'
 
@@ -12,6 +13,7 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
+  app.use(helmet())
 
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: false, transform: true, forbidUnknownValues: true }),
