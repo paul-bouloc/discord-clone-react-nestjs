@@ -1,4 +1,4 @@
-import { Logger, ValidationPipe } from '@nestjs/common'
+import { Logger } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
@@ -18,10 +18,6 @@ async function bootstrap() {
   app.use(helmet())
   app.use(cookieParser())
   app.use(compression())
-
-  app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: false, transform: true, forbidUnknownValues: true }),
-  )
 
   app.useGlobalFilters(new PrismaExceptionFilter(httpAdapter))
 
