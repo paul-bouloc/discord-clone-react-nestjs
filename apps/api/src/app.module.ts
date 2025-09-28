@@ -1,21 +1,31 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { ConfigModule, ConfigType } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { AuthGuard } from 'src/core/auth/guards/auth.guard'
-import appConfig from 'src/core/config/app.config'
+import { appConfig } from 'src/core/config/app.config'
+import { AuthLoaderMiddleware } from 'src/core/middlewares/auth-loader.middleware'
 import { ZodValidationGuard } from 'src/core/validation'
 import { AuthModule } from 'src/modules/auth/auth.module'
+import { UserModule } from 'src/modules/users/user.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
       isGlobal: true,
+      cache: true,
       load: [appConfig],
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      inject: [appConfig.KEY],
+      useFactory: (cfg: ConfigType<typeof appConfig>) => ({
+        secret: cfg.jwtSecret,
+        signOptions: { expiresIn: '1h' },
+      }),
     }),
     ThrottlerModule.forRoot([
       {
@@ -23,12 +33,8 @@ import { AppService } from './app.service'
         limit: 20,
       },
     ]),
-    JwtModule.register({
-      global: true,
-      secret: appConfig().jwtSecret,
-      signOptions: { expiresIn: '1h' },
-    }),
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
@@ -47,4 +53,8 @@ import { AppService } from './app.service'
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthLoaderMiddleware).forRoutes('*')
+  }
+}

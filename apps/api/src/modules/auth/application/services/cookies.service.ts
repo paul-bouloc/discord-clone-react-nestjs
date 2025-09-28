@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 
 @Injectable()
 export class CookieService {
@@ -10,6 +10,10 @@ export class CookieService {
       sameSite: true,
       path: '/',
     })
+  }
+
+  readSessionCookie(req: Request) {
+    return req.cookies.sid as string | undefined
   }
 
   clearSessionCookie(res: Response) {

@@ -26,10 +26,11 @@ export class AuthController {
   @Public()
   @Post('login')
   @ZodValidate(LoginDto)
-  login(@Body() body: LoginDto, @Res({ passthrough: true }) res: Response) {
+  login(@Res({ passthrough: true }) res: Response, @Body() body: LoginDto) {
     return this.loginUc.execute(body, res)
   }
 
+  @Public()
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     return this.logoutUc.execute(res)
