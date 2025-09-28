@@ -1,0 +1,71 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /* ===================================================================== *
+     *  QUALITÉ DE TYPES & COHÉRENCE
+     * ===================================================================== */
+    "strict": true,                          // active tous les contrôles stricts
+    "noUnusedLocals": true,                  // signale les variables inutilisées
+    "noUnusedParameters": true,              // signale les paramètres non utilisés
+    "noFallthroughCasesInSwitch": true,      // évite les oublis de break dans les switch
+    "forceConsistentCasingInFileNames": true,// évite les soucis de casse entre OS
+
+    /* ===================================================================== *
+     *  CIBLE RUNTIME & MODULES (optimisés Vite/ESM)
+     * ===================================================================== */
+    "target": "ES2022",                      // JS moderne, compatible avec la browserslist
+    "module": "ESNext",                      // laisse Vite gérer les modules ESM
+    "moduleResolution": "Bundler",           // résolution recommandée TS 5 pour bundlers (Vite)
+    "verbatimModuleSyntax": true,            // préserve les import/export exacts (meilleur tree-shaking)
+
+    /* ===================================================================== *
+     *  REACT & MODE BUNDLER
+     * ===================================================================== */
+    "jsx": "react-jsx",                      // JSX moderne (pas besoin d'importer React)
+    "isolatedModules": true,                 // requis par Vite/ESBuild/SWC (compilation par fichier)
+    "noEmit": true,                          // le bundler émet le JS, pas tsc
+    "resolveJsonModule": true,               // permet d'importer des .json
+    "allowImportingTsExtensions": true,      // autorise `import './file.ts'` si nécessaire
+
+    /* ===================================================================== *
+     *  LIBS & COMPATIBILITÉ
+     * ===================================================================== */
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],// APIs récentes + DOM (SPA)
+    "skipLibCheck": true,                    // accélère la compilation (OK pour apps)
+    "skipDefaultLibCheck": true,             // idem, saute les libs par défaut
+    "allowSyntheticDefaultImports": true,    // assouplit les imports par défaut (interop pratique)
+    "esModuleInterop": true,                 // compat CommonJS/ESM plus simple (cohérent avec ton back)
+    "useDefineForClassFields": true,         // sémantique de champs de classe moderne (React/TS récent)
+
+    /* ===================================================================== *
+     *  RÉSOLUTIONS D’IMPORTS & ALIAS
+     * ===================================================================== */
+    "baseUrl": ".",                          // base des chemins relatifs
+    "paths": {                               // alias projet (aligné avec Vite)
+      "@/*": ["./src/*"]
+    },
+
+    /* ===================================================================== *
+     *  TYPES (FRONT)
+     * ===================================================================== */
+    "types": ["vite/client"]                 // types Vite côté navigateur
+  },
+
+  /* ======================================================================= *
+   *  PLAGE DE FICHIERS
+   * ======================================================================= */
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "eslint.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tmp",
+    "postcss.config.js",
+    "tailwind.config.js"
+  ]
+}
