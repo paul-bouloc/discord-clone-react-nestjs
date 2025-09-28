@@ -26,7 +26,7 @@ const config = tseslint.config(
       sourceType: 'module',
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: process.cwd(),
+        tsconfigRootDir: __dirname,
       },
     },
     rules: {

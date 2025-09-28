@@ -37,6 +37,8 @@ export default tseslint.config(
       sourceType: 'module',
       globals: globals.browser,
       parserOptions: {
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
         ecmaFeatures: {
           jsx: true,
           tsx: true,
