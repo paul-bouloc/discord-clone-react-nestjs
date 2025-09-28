@@ -8,6 +8,7 @@ import { appConfig } from 'src/core/config/app.config'
 import { AuthLoaderMiddleware } from 'src/core/middlewares/auth-loader.middleware'
 import { ZodValidationGuard } from 'src/core/validation'
 import { AuthModule } from 'src/modules/auth/auth.module'
+import { IdentityModule } from 'src/modules/identity/identity.module'
 import { UserModule } from 'src/modules/users/user.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -34,6 +35,7 @@ import { AppService } from './app.service'
       },
     ]),
     AuthModule,
+    IdentityModule,
     UserModule,
   ],
   controllers: [AppController],
