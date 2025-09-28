@@ -6,6 +6,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { AuthGuard } from 'src/core/auth/guards/auth.guard'
 import { appConfig } from 'src/core/config/app.config'
 import { AuthLoaderMiddleware } from 'src/core/middlewares/auth-loader.middleware'
+import LoggerMiddleware from 'src/core/middlewares/logger.middleware'
 import { ZodValidationGuard } from 'src/core/validation'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { IdentityModule } from 'src/modules/identity/identity.module'
@@ -57,6 +58,6 @@ import { AppService } from './app.service'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthLoaderMiddleware).forRoutes('*')
+    consumer.apply(AuthLoaderMiddleware, LoggerMiddleware).forRoutes('*')
   }
 }
