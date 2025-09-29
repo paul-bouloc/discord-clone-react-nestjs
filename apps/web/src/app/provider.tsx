@@ -1,6 +1,6 @@
+import { Loading } from '@/app/loading'
 import { MainErrorFallback } from '@/components/errors/main'
 import { Toaster } from '@/components/ui/sonner'
-import { Spinner } from '@/components/ui/spinner'
 import { AuthProvider } from '@/contexts/auth/auth.provider'
 import { queryConfig } from '@/lib/react-query'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -22,13 +22,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   )
 
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex h-screen w-screen items-center justify-center bg-gray-600">
-          <Spinner size={48} />
-        </div>
-      }
-    >
+    <React.Suspense fallback={<Loading />}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>

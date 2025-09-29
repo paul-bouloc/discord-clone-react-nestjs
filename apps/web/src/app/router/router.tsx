@@ -1,4 +1,5 @@
 import { ErrorBoundary } from '@/app/error-boundary'
+import { Loading } from '@/app/loading'
 import { convert } from '@/app/router/router.utils'
 import { AppWrapper } from '@/components/layouts/app-wrapper'
 import { AuthWrapper } from '@/components/layouts/auth-wrapper'
@@ -12,11 +13,13 @@ export const createAppRouter = (queryClient: QueryClient) =>
       path: paths.home.path,
       lazy: () => import('../routes/home').then(convert(queryClient)),
       ErrorBoundary: () => <ErrorBoundary />,
+      hydrateFallbackElement: <Loading />,
     },
     {
       path: paths.auth.root.path,
       element: <AuthWrapper />,
       ErrorBoundary: () => <ErrorBoundary />,
+      hydrateFallbackElement: <Loading />,
       children: [
         {
           index: true,
@@ -36,6 +39,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
       path: paths.app.root.path,
       element: <AppWrapper />,
       ErrorBoundary: () => <ErrorBoundary />,
+      hydrateFallbackElement: <Loading />,
       children: [
         {
           index: true,
