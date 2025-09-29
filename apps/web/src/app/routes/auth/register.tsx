@@ -1,10 +1,13 @@
+import { Alert, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DateTripleSelect } from '@/components/ui/date-triple-select'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useLogin } from '@/features/auth/api/login.api'
+import { useRegister } from '@/features/auth/api/register.api'
+import { getApiErrorMessage } from '@/lib/api-client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AlertCircle } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import z from 'zod'
@@ -51,11 +54,16 @@ export default function RegisterPage() {
     },
   })
 
-  const { mutate: login, isPending, error } = useLogin()
+  const { mutate: register, isPending, error } = useRegister()
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const payload = { ...values }
-    console.log(payload)
+    register({
+      email: values.email,
+      displayName: values.displayName || values.userName,
+      userName: values.userName,
+      birthDate: values.birthDate,
+      password: values.password,
+    })
   }
 
   return (
@@ -149,7 +157,13 @@ export default function RegisterPage() {
               }}
             />
 
-            {error ? <p className="text-destructive text-center text-sm">Identifiants invalides.</p> : null}
+            {error ? (
+              <Alert variant="destructive" className="rounded-sm border-red-500/20 bg-red-500/15">
+                <AlertCircle />
+                <AlertTitle>{getApiErrorMessage(error)}</AlertTitle>
+              </Alert>
+            ) : null}
+
             <Button type="submit" className="w-full" disabled={isPending || !form.watch('terms')}>
               {isPending ? 'Création de compte…' : 'Créer un compte'}
             </Button>
