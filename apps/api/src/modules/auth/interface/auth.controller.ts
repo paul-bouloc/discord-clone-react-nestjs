@@ -20,8 +20,8 @@ export class AuthController {
   @HttpCode(201)
   @Post('register')
   @ZodValidate(RegisterDto)
-  register(@Body() body: RegisterDto) {
-    return this.registerUc.execute(body)
+  register(@Res({ passthrough: true }) res: Response, @Body() body: RegisterDto) {
+    return this.registerUc.execute(body, res)
   }
 
   @Public()
