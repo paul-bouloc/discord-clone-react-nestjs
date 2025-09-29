@@ -8,6 +8,6 @@ export class LogoutUc {
 
   execute(res: Response) {
     this.cookieService.clearSessionCookie(res)
-    return { message: 'Logged out successfully' }
+    return { message: 'Déconnexion réussie' }
   }
 }

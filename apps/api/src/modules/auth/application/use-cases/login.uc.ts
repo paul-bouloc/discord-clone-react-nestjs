@@ -20,12 +20,12 @@ export class LoginUc {
       withPassword: true,
     })
     if (!user?.password) {
-      throw new BadRequestException('Invalid email or password')
+      throw new BadRequestException('Email ou mot de passe invalide')
     }
 
     const isPasswordValid = await this.passwordService.compare(dto.password, user.password)
     if (!isPasswordValid) {
-      throw new BadRequestException('Invalid email or password')
+      throw new BadRequestException('Email ou mot de passe invalide')
     }
 
     const token = await this.jwtService.signAsync({ userId: user.userId })
