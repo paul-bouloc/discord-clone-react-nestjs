@@ -1,0 +1,163 @@
+import { Alert, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { DateTripleSelect } from '@/components/ui/date-triple-select'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useRegister } from '@/features/auth/api/register.api'
+import { getApiErrorMessage } from '@/lib/api-client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AlertCircle } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
+
+const formSchema = z.object({
+  email: z.email('Adresse email invalide'),
+  displayName: z.string("Le nom d'affichage est invalide").optional(),
+  userName: z
+    .string("Le nom d'utilisateur est invalide")
+    .min(3, "Le nom d'utilisateur doit contenir au moins 3 caractères")
+    .max(20, "Le nom d'utilisateur doit contenir moins de 20 caractères")
+    .regex(/^[a-z0-9_-]+$/i, "Le nom d'utilisateur ne peut contenir que des lettres, chiffres, '-' et '_'")
+    .toLowerCase(),
+  birthDate: z.string().min(1, 'Date invalide'),
+  password: z
+    .string()
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+    .max(20, 'Le mot de passe doit contenir moins de 20 caractères')
+    .refine(
+      (val) => {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(val)
+      },
+      {
+        message:
+          'Le mot de passe doit contenir au moins 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial',
+      },
+    ),
+  terms: z.boolean(),
+})
+
+export default function RegisterForm() {
+  const form = useForm<z.input<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    reValidateMode: 'onChange',
+    defaultValues: {
+      email: '',
+      userName: '',
+      displayName: '',
+      password: '',
+      birthDate: '',
+      terms: false,
+    },
+  })
+
+  const { mutate: register, isPending, error } = useRegister()
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    register({
+      email: values.email,
+      displayName: values.displayName || values.userName,
+      userName: values.userName,
+      birthDate: values.birthDate,
+      password: values.password,
+    })
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-mail</FormLabel>
+              <FormControl>
+                <Input {...field} required autoComplete="email" inputMode="email" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="displayName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom d&apos;affichage</FormLabel>
+              <FormControl>
+                <Input {...field} autoComplete="displayname" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="userName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom d&apos;utilisateur</FormLabel>
+              <FormControl>
+                <Input {...field} required autoComplete="username" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Mot de passe</FormLabel>
+              <FormControl>
+                <Input {...field} required type="password" autoComplete="current-password" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <DateTripleSelect name="birthDate" label="Date de naissance" requiredIndicator maxYears={100} />
+
+        <FormField
+          control={form.control}
+          name="terms"
+          render={({ field }) => {
+            return (
+              <FormItem className="flex flex-row items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) => {
+                      return checked ? field.onChange(true) : field.onChange(false)
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="text-sm font-normal text-gray-300">
+                  J&apos;ai lu et accepté les conditions d&apos;utilisation et la politique de confidentialité de
+                  Discord.
+                </FormLabel>
+              </FormItem>
+            )
+          }}
+        />
+
+        {error ? (
+          <Alert variant="destructive" className="rounded-sm border-red-500/20 bg-red-500/15">
+            <AlertCircle />
+            <AlertTitle>{getApiErrorMessage(error)}</AlertTitle>
+          </Alert>
+        ) : null}
+
+        <Button type="submit" className="w-full" disabled={isPending || !form.watch('terms')}>
+          {isPending ? 'Création de compte…' : 'Créer un compte'}
+        </Button>
+      </form>
+    </Form>
+  )
+}
