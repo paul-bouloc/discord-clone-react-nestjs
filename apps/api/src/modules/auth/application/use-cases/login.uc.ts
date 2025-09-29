@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 import { LoginDto } from 'src/modules/auth/application/dtos/login.dto'
@@ -20,12 +20,12 @@ export class LoginUc {
       withPassword: true,
     })
     if (!user?.password) {
-      throw new UnauthorizedException('Invalid email or password')
+      throw new BadRequestException('Invalid email or password')
     }
 
     const isPasswordValid = await this.passwordService.compare(dto.password, user.password)
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid email or password')
+      throw new BadRequestException('Invalid email or password')
     }
 
     const token = await this.jwtService.signAsync({ userId: user.userId })

@@ -7,9 +7,9 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { data: user, isLoading, error, isError } = useSelfUser()
+  const { data: user, isLoading, error } = useSelfUser()
 
-  const isAuthenticated = !!user && !isError
+  const isAuthenticated = Boolean(user)
 
   const value: AuthContextType = {
     user: user || null,

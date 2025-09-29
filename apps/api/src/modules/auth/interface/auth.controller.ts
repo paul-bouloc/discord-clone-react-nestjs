@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common'
+import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { Public } from 'src/core/auth/decorators/public.decorator'
 import { ZodValidate } from 'src/core/validation'
@@ -17,6 +17,7 @@ export class AuthController {
   ) {}
 
   @Public()
+  @HttpCode(201)
   @Post('register')
   @ZodValidate(RegisterDto)
   register(@Body() body: RegisterDto) {
@@ -24,6 +25,7 @@ export class AuthController {
   }
 
   @Public()
+  @HttpCode(200)
   @Post('login')
   @ZodValidate(LoginDto)
   login(@Res({ passthrough: true }) res: Response, @Body() body: LoginDto) {
@@ -31,6 +33,7 @@ export class AuthController {
   }
 
   @Public()
+  @HttpCode(200)
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     return this.logoutUc.execute(res)

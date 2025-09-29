@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useLogin } from '@/features/auth/api/login.api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
@@ -20,10 +21,10 @@ export default function LoginPage() {
     },
   })
 
+  const { mutate: login, isPending, error } = useLogin()
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    login(values)
   }
 
   return (
@@ -43,7 +44,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
-                    <Input {...field} required />
+                    <Input {...field} required autoComplete="email" inputMode="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -56,14 +57,15 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Mot de passe</FormLabel>
                   <FormControl>
-                    <Input {...field} required type="password" />
+                    <Input {...field} required type="password" autoComplete="current-password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="mt-3 w-full">
-              Connexion
+            {error ? <p className="text-destructive text-center text-sm">Identifiants invalides.</p> : null}
+            <Button type="submit" className="mt-3 w-full" disabled={isPending}>
+              {isPending ? 'Connexion…' : 'Connexion'}
             </Button>
           </form>
         </Form>

@@ -1,7 +1,6 @@
 import { env } from '@/config/env'
 import { paths } from '@/config/paths'
 import Axios, { type InternalAxiosRequestConfig } from 'axios'
-import { toast } from 'sonner'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (config.headers) {
@@ -22,16 +21,16 @@ api.interceptors.response.use(
     return response.data
   },
   (error) => {
-    const message = error.response?.data?.message || error.message
+    const status = error.response?.status
+    const url: string | undefined = error.config?.url
 
-    if (!(error.response?.status === 401 && error.config?.url === '/me')) {
-      toast.error(message)
-    }
+    const authEndpoints = ['/me', '/auth/login', '/auth/register', '/auth/logout']
 
-    if (error.response?.status === 401 && error.config?.url !== '/me') {
+    if (status === 401 && url && !authEndpoints.includes(url)) {
       const searchParams = new URLSearchParams()
       const redirectTo = searchParams.get('redirectTo') || window.location.pathname
       window.location.href = paths.auth.login.getHref(redirectTo)
+      return
     }
 
     return Promise.reject(error)
