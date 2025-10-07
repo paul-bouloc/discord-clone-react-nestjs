@@ -29,8 +29,13 @@ export class AuthLoaderMiddleware implements NestMiddleware {
         secret: this.cfg.jwtSecret,
       })
       const user = await this.users.findById(userId as UserId)
-      if (user) req.user = user
-      else this.cookies.clearSessionCookie(res)
+      if (user) {
+        req.user = user
+        const newToken = await this.jwt.signAsync({ userId: user.userId })
+        this.cookies.setSessionCookie(res, newToken)
+      } else {
+        this.cookies.clearSessionCookie(res)
+      }
     } catch {
       this.cookies.clearSessionCookie(res)
     }
