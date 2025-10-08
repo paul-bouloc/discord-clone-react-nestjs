@@ -1,5 +1,5 @@
+import { ProtectedRouteLayout } from '../protected-route-layout'
 import { AppPageLayout } from './app-page-layout'
-import { ProtectedRouteLayout } from './protected-route-layout'
 
 interface AppWrapperProps {
   children?: React.ReactNode

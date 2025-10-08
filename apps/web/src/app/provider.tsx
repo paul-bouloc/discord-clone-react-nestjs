@@ -2,6 +2,7 @@ import { Loading } from '@/app/loading'
 import { MainErrorFallback } from '@/components/errors/main'
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/contexts/auth/auth.provider'
+import { BreadcrumbProvider } from '@/contexts/breadcrumb'
 import { queryConfig } from '@/lib/react-query'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -27,9 +28,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <Toaster />
-              <ReactQueryDevtools initialIsOpen={false} />
-              {children}
+              <BreadcrumbProvider>
+                <Toaster />
+                <ReactQueryDevtools initialIsOpen={false} />
+                {children}
+              </BreadcrumbProvider>
             </AuthProvider>
           </QueryClientProvider>
         </HelmetProvider>
