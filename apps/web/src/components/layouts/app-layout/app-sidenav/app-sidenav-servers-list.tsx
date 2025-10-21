@@ -1,14 +1,31 @@
-import { AppSidenavServersListItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-servers-list-item'
+import { AppSidenavItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-item'
+import { AppSidenavServerItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-server-item'
+import { useIsPersonalSelected } from '@/lib/hooks/use-server-selection'
 import { PlusIcon } from 'lucide-react'
 
+const mockServers = [
+  { id: 'element-server', name: "Serveur d'Element", avatarFallback: 'SdE' },
+  { id: 'element-server-2', name: 'Memology', avatarFallback: 'M' },
+]
+
 export const AppSidenavServersList = () => {
+  const isPersonalSelected = useIsPersonalSelected()
+
   return (
     <div className="flex max-w-[72px] flex-1 flex-col items-center gap-2">
-      <AppSidenavServersListItem tooltip="Messages privés" />
+      {/* Messages privés */}
+      <AppSidenavItem tooltip="Messages privés" isSelected={isPersonalSelected} />
+
+      {/* Separator */}
       <div className="bg-gray-660 h-px w-6"></div>
-      <AppSidenavServersListItem tooltip="Serveur d'Element" avatarFallback="SdE" />
-      {/* TODO: Add a modal to add a server */}
-      <AppSidenavServersListItem
+
+      {/* Liste des serveurs */}
+      {mockServers.map((server) => (
+        <AppSidenavServerItem key={server.id} server={server} />
+      ))}
+
+      {/* Bouton d'ajout de serveur */}
+      <AppSidenavItem
         tooltip="Ajouter un serveur"
         icon={
           <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-gray-200">

@@ -10,7 +10,7 @@ interface AppSidenavServersListItemProps {
   tooltip?: string
 }
 
-export const AppSidenavServersListItem = ({
+export const AppSidenavItem = ({
   isSelected,
   serverAvatarSrc,
   avatarFallback,
