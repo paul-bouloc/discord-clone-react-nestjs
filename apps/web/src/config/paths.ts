@@ -23,16 +23,16 @@ export const paths = {
 
   app: {
     root: {
-      path: '/app',
-      getHref: () => '/app',
+      path: '/channels',
+      getHref: () => '/channels',
     },
-    profile: {
-      path: 'profile',
-      getHref: () => '/app/profile',
+    personal: {
+      path: '@me',
+      getHref: () => '/channels/@me',
     },
-    servers: {
-      path: 'servers',
-      getHref: (id: string) => `/app/servers/${id}`,
+    server: {
+      path: ':serverId',
+      getHref: (serverId: string) => `/channels/${serverId}`,
     },
   },
 } as const

@@ -1,3 +1,4 @@
+import { paths } from '@/config/paths'
 import RegisterForm from '@/features/auth/components/register-form'
 import { Link } from 'react-router'
 
@@ -11,7 +12,10 @@ export default function RegisterPage() {
       <div className="mt-5 flex w-full flex-col">
         <RegisterForm />
         <div className="mt-5 flex items-center gap-1 text-sm">
-          <Link to="/auth/login" className="text-brand-360 font-medium hover:underline hover:underline-offset-2">
+          <Link
+            to={paths.auth.login.getHref()}
+            className="text-brand-360 font-medium hover:underline hover:underline-offset-2"
+          >
             Tu as déjà un compte ? Connecte-toi
           </Link>
         </div>

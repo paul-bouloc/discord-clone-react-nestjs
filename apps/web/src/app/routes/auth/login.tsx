@@ -1,3 +1,4 @@
+import { paths } from '@/config/paths'
 import LoginForm from '@/features/auth/components/login-form'
 import { Link } from 'react-router'
 
@@ -13,7 +14,10 @@ export default function LoginPage() {
         <LoginForm />
         <div className="mt-2 flex items-center gap-1 text-sm">
           <p className="text-gray-360">Besoin d&apos;un compte ?</p>
-          <Link to="/auth/register" className="text-brand-360 font-medium hover:underline hover:underline-offset-2">
+          <Link
+            to={paths.auth.register.getHref()}
+            className="text-brand-360 font-medium hover:underline hover:underline-offset-2"
+          >
             S&apos;inscrire
           </Link>
         </div>

@@ -1,4 +1,5 @@
 import { Loading } from '@/app/loading'
+import { paths } from '@/config/paths'
 import { useAuth } from '@/contexts/auth/auth.hook'
 import { Navigate } from 'react-router'
 
@@ -14,7 +15,7 @@ export const ProtectedRouteLayout = ({ children }: ProtectedRouteLayoutProps) =>
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/auth/login" replace />
+    return <Navigate to={paths.auth.login.getHref()} replace />
   }
 
   return <>{children}</>

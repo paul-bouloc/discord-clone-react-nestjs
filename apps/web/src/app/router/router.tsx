@@ -23,7 +23,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
       children: [
         {
           index: true,
-          element: <Navigate to="/auth/login" replace />,
+          element: <Navigate to={paths.auth.login.getHref()} replace />,
         },
         {
           path: paths.auth.login.path,
@@ -43,11 +43,11 @@ export const createAppRouter = (queryClient: QueryClient) =>
       children: [
         {
           index: true,
-          lazy: () => import('../routes/app/overview').then(convert(queryClient)),
+          element: <Navigate to={paths.app.personal.getHref()} replace />,
         },
         {
-          path: paths.app.profile.path,
-          lazy: () => import('../routes/app/profile').then(convert(queryClient)),
+          path: paths.app.personal.path,
+          lazy: () => import('../routes/app/friend-list').then(convert(queryClient)),
         },
       ],
     },

@@ -1,4 +1,5 @@
 import { Loading } from '@/app/loading'
+import { paths } from '@/config/paths'
 import { useAuth } from '@/contexts/auth/auth.hook'
 import { Navigate } from 'react-router'
 
@@ -10,8 +11,8 @@ export default function HomePage() {
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/app" replace />
+    return <Navigate to={paths.app.root.getHref()} replace />
   }
 
-  return <Navigate to="/auth" replace />
+  return <Navigate to={paths.auth.root.getHref()} replace />
 }

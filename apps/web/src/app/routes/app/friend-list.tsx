@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/auth/auth.hook'
 import { useBreadcrumb } from '@/contexts/breadcrumb'
 import { useEffect } from 'react'
 
-export default function OverviewPage() {
+export default function FriendListPage() {
   const { setBreadcrumb } = useBreadcrumb()
   const { user } = useAuth()
 
@@ -14,7 +14,7 @@ export default function OverviewPage() {
 
   return (
     <div>
-      <h1>OverviewPage</h1>
+      <h1>FriendListPage</h1>
       <p>{user?.email}</p>
     </div>
   )
