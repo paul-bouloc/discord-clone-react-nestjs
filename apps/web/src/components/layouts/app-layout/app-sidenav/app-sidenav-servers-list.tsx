@@ -3,8 +3,9 @@ import { AppSidenavServersListItem } from '@/components/layouts/app-layout/app-s
 export const AppSidenavServersList = () => {
   return (
     <div className="flex max-w-[72px] flex-1 flex-col items-center gap-2">
-      <AppSidenavServersListItem />
+      <AppSidenavServersListItem tooltip="Messages privés" />
       <div className="bg-gray-660 h-px w-6"></div>
+      <AppSidenavServersListItem tooltip="Serveur d'Element" avatarFallback="SdE" />
     </div>
   )
 }
