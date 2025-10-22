@@ -1,12 +1,13 @@
+import { useAppDispatch } from '@/app/hook'
 import { Loading } from '@/app/loading'
 import { MainErrorFallback } from '@/components/errors/main'
 import { Toaster } from '@/components/ui/sonner'
-import { AuthProvider } from '@/contexts/auth/auth.provider'
 import { BreadcrumbProvider } from '@/contexts/breadcrumb'
+import { loadSelfUser } from '@/features/auth/store'
 import { queryConfig } from '@/lib/react-query'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -22,18 +23,23 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }),
   )
 
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    // Charge l’utilisateur dès que l’app démarre
+    void dispatch(loadSelfUser())
+  }, [dispatch])
+
   return (
     <React.Suspense fallback={<Loading />}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <BreadcrumbProvider>
-                <Toaster />
-                <ReactQueryDevtools initialIsOpen={false} />
-                {children}
-              </BreadcrumbProvider>
-            </AuthProvider>
+            <BreadcrumbProvider>
+              <Toaster />
+              <ReactQueryDevtools initialIsOpen={false} />
+              {children}
+            </BreadcrumbProvider>
           </QueryClientProvider>
         </HelmetProvider>
       </ErrorBoundary>

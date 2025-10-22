@@ -1,3 +1,3 @@
 import z from 'zod'
 
-export const EmailPolicy = z.email('Invalid email address').trim().toLowerCase()
+export const EmailPolicy = z.email('Adresse email invalide').trim().toLowerCase()

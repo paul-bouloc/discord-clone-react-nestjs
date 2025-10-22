@@ -1,6 +1,6 @@
 import { FriendIcon } from '@/components/icons/friend-icon'
-import { useAuth } from '@/contexts/auth/auth.hook'
 import { useBreadcrumb } from '@/contexts/breadcrumb'
+import { useAuth } from '@/features/auth/store/use-auth'
 import { useEffect } from 'react'
 
 export default function FriendListPage() {

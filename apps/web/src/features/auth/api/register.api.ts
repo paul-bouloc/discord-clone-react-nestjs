@@ -1,3 +1,5 @@
+import { useAppDispatch } from '@/app/hook'
+import { setUser } from '@/features/auth/store'
 import type { User } from '@/features/users/types/user.type'
 import { api } from '@/lib/api-client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -18,11 +20,12 @@ export async function register(payload: RegisterPayload): Promise<RegisterResult
 
 export function useRegister() {
   const queryClient = useQueryClient()
+  const dispatch = useAppDispatch()
 
   return useMutation({
     mutationFn: (payload: RegisterPayload) => register(payload),
-    onSuccess: () => {
-      // Invalide et refetch l'utilisateur courant
+    onSuccess: (user) => {
+      dispatch(setUser(user))
       void queryClient.invalidateQueries({ queryKey: ['selfUser'] })
     },
   })

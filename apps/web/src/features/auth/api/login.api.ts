@@ -1,5 +1,7 @@
+import { useAppDispatch } from '@/app/hook'
+import { setError, setUser } from '@/features/auth/store'
 import type { User } from '@/features/users/types/user.type'
-import { api } from '@/lib/api-client'
+import { api, getApiErrorMessage } from '@/lib/api-client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export interface LoginPayload {
@@ -15,12 +17,16 @@ export async function login(payload: LoginPayload): Promise<LoginResult> {
 
 export function useLogin() {
   const queryClient = useQueryClient()
+  const dispatch = useAppDispatch()
 
   return useMutation({
     mutationFn: (payload: LoginPayload) => login(payload),
-    onSuccess: () => {
-      // Invalide et refetch l'utilisateur courant
+    onSuccess: (user) => {
+      dispatch(setUser(user))
       void queryClient.invalidateQueries({ queryKey: ['selfUser'] })
+    },
+    onError: (error) => {
+      dispatch(setError(getApiErrorMessage(error)))
     },
   })
 }

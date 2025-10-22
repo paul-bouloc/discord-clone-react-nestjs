@@ -2,7 +2,7 @@ import type { User } from '@/features/users/types/user.type'
 import { api } from '@/lib/api-client'
 import { useQuery } from '@tanstack/react-query'
 
-export const getSelfUser = async (): Promise<User | null> => {
+export const getSelfUser = async (): Promise<User> => {
   return await api.get('/me')
 }
 

@@ -1,14 +1,14 @@
 import z from 'zod'
 
 export const BirthDatePolicy = z.iso
-  .date('Invalid birth date')
+  .date('Date de naissance invalide')
   .refine(
     (val) => {
       const date = new Date(val)
       return date < new Date() && date > new Date(new Date().setFullYear(new Date().getFullYear() - 100))
     },
     {
-      message: 'Birth date must be before today and less than 100 years ago',
+      message: 'Date de naissance doit être avant aujourd\'hui et moins de 100 ans',
     },
   )
   .transform((val) => new Date(val))
