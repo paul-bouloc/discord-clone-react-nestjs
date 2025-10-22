@@ -47,7 +47,11 @@ export const createAppRouter = (queryClient: QueryClient) =>
         },
         {
           path: paths.app.personal.path,
-          lazy: () => import('../routes/app/friend-list').then(convert(queryClient)),
+          lazy: () => import('../routes/app/personnal/friend-list').then(convert(queryClient)),
+        },
+        {
+          path: paths.app.server.path,
+          lazy: () => import('../routes/app/server/server-landing').then(convert(queryClient)),
         },
       ],
     },

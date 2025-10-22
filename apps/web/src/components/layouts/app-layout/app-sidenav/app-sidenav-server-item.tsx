@@ -1,4 +1,5 @@
 import { AppSidenavItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-item'
+import { paths } from '@/config/paths'
 import { useIsServerSelected } from '@/lib/hooks/use-server-selection'
 
 interface Server {
@@ -18,6 +19,7 @@ interface AppSidenavServerItemProps {
  */
 export const AppSidenavServerItem = ({ server }: AppSidenavServerItemProps) => {
   const isSelected = useIsServerSelected(server.id)
+  const serverHref = paths.app.server.getHref(server.id)
 
   return (
     <AppSidenavItem
@@ -25,6 +27,7 @@ export const AppSidenavServerItem = ({ server }: AppSidenavServerItemProps) => {
       avatarFallback={server.avatarFallback}
       serverAvatarSrc={server.avatarUrl}
       isSelected={isSelected}
+      href={serverHref}
     />
   )
 }

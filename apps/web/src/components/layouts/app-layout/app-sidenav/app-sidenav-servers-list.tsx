@@ -1,5 +1,6 @@
 import { AppSidenavItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-item'
 import { AppSidenavServerItem } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-server-item'
+import { paths } from '@/config/paths'
 import { useIsPersonalSelected } from '@/lib/hooks/use-server-selection'
 import { PlusIcon } from 'lucide-react'
 
@@ -10,11 +11,12 @@ const mockServers = [
 
 export const AppSidenavServersList = () => {
   const isPersonalSelected = useIsPersonalSelected()
+  const personalHref = paths.app.personal.getHref()
 
   return (
     <div className="flex max-w-[72px] flex-1 flex-col items-center gap-2">
       {/* Messages privés */}
-      <AppSidenavItem tooltip="Messages privés" isSelected={isPersonalSelected} />
+      <AppSidenavItem tooltip="Messages privés" isSelected={isPersonalSelected} href={personalHref} />
 
       {/* Separator */}
       <div className="bg-gray-660 h-px w-6"></div>
