@@ -1,4 +1,4 @@
-import { ReduxProvider } from '@/app/providers/redux-provider.tsx'
+import { ReduxProvider } from '@/state'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './app/index.tsx'

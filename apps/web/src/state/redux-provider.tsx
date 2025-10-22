@@ -1,4 +1,4 @@
-import { store } from '@/app/store'
+import { store } from '@/state'
 import type { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 

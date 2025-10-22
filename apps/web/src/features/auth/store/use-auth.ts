@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/app/hook'
+import { useAppSelector } from '@/state'
 import { selectAuth } from './auth.selectors'
 
 export function useAuth() {

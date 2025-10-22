@@ -1,7 +1,7 @@
-import { useAppDispatch } from '@/app/hook'
 import { setError, setUser } from '@/features/auth/store'
 import type { User } from '@/features/users/types/user.type'
 import { api, getApiErrorMessage } from '@/lib/api-client'
+import { useAppDispatch } from '@/state'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export interface LoginPayload {
