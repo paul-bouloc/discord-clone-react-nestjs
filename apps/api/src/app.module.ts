@@ -26,7 +26,7 @@ import { AppService } from './app.service'
       inject: [appConfig.KEY],
       useFactory: (cfg: ConfigType<typeof appConfig>) => ({
         secret: cfg.jwtSecret,
-        signOptions: { expiresIn: '1h' },
+        signOptions: { expiresIn: '30d' },
       }),
     }),
     ThrottlerModule.forRoot([
