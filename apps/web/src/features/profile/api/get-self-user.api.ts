@@ -1,6 +1,8 @@
 import type { User } from '@/features/users/types/user.type'
 import { api } from '@/lib/api-client'
 import { useQuery } from '@tanstack/react-query'
+import { PROFILE_QUERY_CONFIG } from './query-config'
+import { profileKeys } from './query-keys'
 
 export const getSelfUser = async (): Promise<User> => {
   return await api.get('/me')
@@ -8,10 +10,8 @@ export const getSelfUser = async (): Promise<User> => {
 
 export const useSelfUser = () => {
   return useQuery({
-    queryKey: ['selfUser'],
+    queryKey: profileKeys.self(),
     queryFn: getSelfUser,
-    retry: false,
-    throwOnError: false,
-    staleTime: 1000 * 60,
+    ...PROFILE_QUERY_CONFIG,
   })
 }

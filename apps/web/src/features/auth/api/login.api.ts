@@ -3,6 +3,7 @@ import type { User } from '@/features/users/types/user.type'
 import { api, getApiErrorMessage } from '@/lib/api-client'
 import { useAppDispatch } from '@/state'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { invalidateAfterAuth } from './query-invalidation'
 
 export interface LoginPayload {
   email: string
@@ -21,9 +22,9 @@ export function useLogin() {
 
   return useMutation({
     mutationFn: (payload: LoginPayload) => login(payload),
-    onSuccess: (user) => {
+    onSuccess: async (user) => {
       dispatch(setUser(user))
-      void queryClient.invalidateQueries({ queryKey: ['selfUser'] })
+      await invalidateAfterAuth(queryClient)
     },
     onError: (error) => {
       dispatch(setError(getApiErrorMessage(error)))
