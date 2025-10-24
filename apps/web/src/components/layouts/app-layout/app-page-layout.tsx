@@ -1,5 +1,5 @@
 import { AppBreadcrumb } from '@/components/layouts/app-layout/app-breacrumb'
-import { AppSidenav } from '@/components/layouts/app-layout/app-sidenav/app-sidenax'
+import { AppSidenav } from '@/components/layouts/app-layout/app-sidenav/app-sidenav'
 import { Outlet } from 'react-router'
 
 interface AppPageLayoutProps {

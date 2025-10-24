@@ -1,5 +1,5 @@
-import { AppSidenavPrivateNav } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-private-nav'
-import { AppSidenavServerNav } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-server-nav'
+import { AppPrivateNav } from '@/components/layouts/app-layout/app-sidenav/app-private-sidenav/app-private-nav'
+import { AppServerNav } from '@/components/layouts/app-layout/app-sidenav/app-server-nav/app-server-nav'
 import { AppSidenavServersList } from '@/components/layouts/app-layout/app-sidenav/app-sidenav-servers-list'
 import { paths } from '@/config/paths'
 import { useLocation } from 'react-router'
@@ -13,8 +13,8 @@ export const AppSidenav = () => {
   return (
     <div className="flex max-w-[374px] flex-1 shrink-0 bg-gray-800">
       <AppSidenavServersList />
-      {isPrivateSpace && <AppSidenavPrivateNav />}
-      {isServerSpace && <AppSidenavServerNav />}
+      {isPrivateSpace && <AppPrivateNav />}
+      {isServerSpace && <AppServerNav />}
     </div>
   )
 }

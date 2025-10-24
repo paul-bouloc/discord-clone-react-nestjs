@@ -14,7 +14,7 @@ export const AppSidenavServersList = () => {
   const personalHref = paths.app.personal.getHref()
 
   return (
-    <div className="flex max-w-[72px] flex-1 flex-col items-center gap-2">
+    <nav className="flex max-w-[72px] flex-1 flex-col items-center gap-2">
       {/* Messages privés */}
       <AppSidenavItem tooltip="Messages privés" isSelected={isPersonalSelected} href={personalHref} />
 
@@ -38,6 +38,6 @@ export const AppSidenavServersList = () => {
           </div>
         }
       />
-    </div>
+    </nav>
   )
 }
