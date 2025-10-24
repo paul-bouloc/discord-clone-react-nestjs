@@ -10,7 +10,7 @@ export const AppPageLayout = ({ children }: AppPageLayoutProps) => {
   return (
     <div className="flex h-screen w-full flex-col">
       <AppBreadcrumb />
-      <div className="flex w-full flex-1">
+      <div className="flex h-screen w-full flex-1 overflow-hidden">
         <AppSidenav />
         {children || <Outlet />}
       </div>
