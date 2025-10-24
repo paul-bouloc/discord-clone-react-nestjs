@@ -1,6 +1,6 @@
 import { Loading } from '@/app/loading'
 import { paths } from '@/config/paths'
-import { useAuth } from '@/contexts/auth/auth.hook'
+import { useAuth } from '@/features/auth/store/use-auth'
 import { Navigate } from 'react-router'
 
 export default function HomePage() {
