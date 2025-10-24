@@ -11,7 +11,7 @@ const mockServers = [
 
 export const AppSidenavServersList = () => {
   const isPersonalSelected = useIsPersonalSelected()
-  const personalHref = paths.app.personal.getHref()
+  const personalHref = paths.app.personal.root.getHref()
 
   return (
     <nav className="flex max-w-[72px] flex-1 flex-col items-center gap-2">

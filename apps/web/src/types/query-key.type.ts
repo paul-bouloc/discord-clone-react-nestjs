@@ -13,7 +13,7 @@ export interface QueryConfig {
   throwOnError?: boolean
   /** Activer la query automatiquement */
   enabled?: boolean
-  /** Fonction de retry personnalisée */
+  /** Fonction de retry personalisée */
   retryOnMount?: boolean
 }
 

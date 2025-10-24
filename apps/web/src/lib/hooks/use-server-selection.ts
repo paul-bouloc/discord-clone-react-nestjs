@@ -20,7 +20,7 @@ export const useServerSelection = ({ serverType, serverId }: UseServerSelectionO
   switch (serverType) {
     case 'personal':
       // Vérifie si on est sur la route des messages privés (@me)
-      return currentPath === paths.app.personal.getHref()
+      return currentPath === paths.app.personal.root.getHref()
 
     case 'server':
       // Vérifie si on est sur une route de serveur spécifique
@@ -32,6 +32,12 @@ export const useServerSelection = ({ serverType, serverId }: UseServerSelectionO
   }
 }
 
+export const usePrivateChannelSelection = (channelId: string): boolean => {
+  const location = useLocation()
+  const currentPath = location.pathname
+  return currentPath === paths.app.personal.channel.getHref(channelId)
+}
+
 /**
  * Hook pour obtenir l'ID du serveur actuellement sélectionné depuis l'URL
  * @returns string | null - L'ID du serveur ou null si aucun serveur n'est sélectionné
@@ -41,7 +47,7 @@ export const useCurrentServerId = (): string | null => {
   const currentPath = location.pathname
 
   // Si on est sur la route des messages privés
-  if (currentPath === paths.app.personal.getHref()) {
+  if (currentPath === paths.app.personal.root.getHref()) {
     return null
   }
 

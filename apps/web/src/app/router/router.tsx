@@ -43,11 +43,20 @@ export const createAppRouter = (queryClient: QueryClient) =>
       children: [
         {
           index: true,
-          element: <Navigate to={paths.app.personal.getHref()} replace />,
+          element: <Navigate to={paths.app.personal.root.getHref()} replace />,
         },
         {
-          path: paths.app.personal.path,
-          lazy: () => import('../routes/app/personnal/friend-list').then(convert(queryClient)),
+          path: paths.app.personal.root.path,
+          children: [
+            {
+              index: true,
+              lazy: () => import('../routes/app/personal/friend-list').then(convert(queryClient)),
+            },
+            {
+              path: paths.app.personal.channel.path,
+              lazy: () => import('../routes/app/personal/private-channel').then(convert(queryClient)),
+            },
+          ],
         },
         {
           path: paths.app.server.path,

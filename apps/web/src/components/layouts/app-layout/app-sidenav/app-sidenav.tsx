@@ -7,7 +7,7 @@ import { useLocation } from 'react-router'
 export const AppSidenav = () => {
   const location = useLocation()
 
-  const isPrivateSpace = location.pathname.includes(paths.app.personal.path)
+  const isPrivateSpace = location.pathname.includes(paths.app.personal.root.path)
   const isServerSpace = !isPrivateSpace
 
   return (

@@ -27,8 +27,14 @@ export const paths = {
       getHref: () => '/channels',
     },
     personal: {
-      path: '@me',
-      getHref: () => '/channels/@me',
+      root: {
+        path: '@me',
+        getHref: () => '/channels/@me',
+      },
+      channel: {
+        path: ':channelId',
+        getHref: (channelId: string) => `/channels/@me/${channelId}`,
+      },
     },
     server: {
       path: ':serverId',
