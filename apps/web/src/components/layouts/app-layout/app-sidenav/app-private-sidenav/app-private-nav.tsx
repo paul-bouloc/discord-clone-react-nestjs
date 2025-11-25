@@ -11,31 +11,26 @@ const friends = [
     id: '123',
     name: 'Megy_77',
     avatarSrc: 'https://github.com/shadcn.png',
-    avatarFallback: 'CN',
   },
   {
     id: '456',
     name: 'Ludovic',
     avatarSrc: 'https://github.com/shadcn.png',
-    avatarFallback: 'JD',
   },
   {
     id: '789',
     name: 'Flo',
-    avatarSrc: 'https://github.com/shadcn.png',
-    avatarFallback: 'JD',
+    avatarSrc: undefined,
   },
   {
     id: '101',
     name: 'Gamper',
     avatarSrc: 'https://github.com/shadcn.png',
-    avatarFallback: 'JD',
   },
   {
     id: '102',
     name: 'Kryyys',
-    avatarSrc: 'https://github.com/shadcn.png',
-    avatarFallback: 'JD',
+    avatarSrc: undefined,
   },
 ]
 
@@ -76,12 +71,7 @@ export const AppPrivateNav = () => {
             Messages privés
           </h4>
           {friends.map((friend) => (
-            <AppPrivateNavChannelItem
-              key={friend.id}
-              channelId={friend.id}
-              avatarSrc={friend.avatarSrc}
-              avatarFallback={friend.avatarFallback}
-            >
+            <AppPrivateNavChannelItem key={friend.id} channelId={friend.id} avatarSrc={friend.avatarSrc}>
               {friend.name}
             </AppPrivateNavChannelItem>
           ))}

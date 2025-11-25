@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button/button'
+import { UserAvatar } from '@/components/ui/user-avatar'
 import { paths } from '@/config/paths'
 import { usePrivateChannelSelection } from '@/lib/hooks/use-server-selection'
 import { cn } from '@/lib/utils'
@@ -7,17 +7,11 @@ import { Link } from 'react-router'
 
 interface AppPrivateNavChannelItemProps {
   channelId: string
-  avatarSrc: string
-  avatarFallback: string
+  avatarSrc: string | undefined
   children: React.ReactNode
 }
 
-export const AppPrivateNavChannelItem = ({
-  channelId,
-  avatarSrc,
-  avatarFallback,
-  children,
-}: AppPrivateNavChannelItemProps) => {
+export const AppPrivateNavChannelItem = ({ channelId, avatarSrc, children }: AppPrivateNavChannelItemProps) => {
   const isSelected = usePrivateChannelSelection(channelId)
   const channelHref = paths.app.personal.channel.getHref(channelId)
   return (
@@ -29,10 +23,7 @@ export const AppPrivateNavChannelItem = ({
           isSelected ? 'bg-gray-630 text-gray-130' : 'bg-transparent text-gray-400',
         )}
       >
-        <Avatar>
-          <AvatarImage src={avatarSrc} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
-        </Avatar>
+        <UserAvatar src={avatarSrc} />
         <p className={isSelected ? 'text-gray-130' : 'group-hover:text-gray-130'}>{children}</p>
       </Button>
     </Link>
