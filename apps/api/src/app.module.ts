@@ -9,6 +9,7 @@ import { AuthLoaderMiddleware } from 'src/core/middlewares/auth-loader.middlewar
 import LoggerMiddleware from 'src/core/middlewares/logger.middleware'
 import { ZodValidationGuard } from 'src/core/validation'
 import { AuthModule } from 'src/modules/auth/auth.module'
+import { FriendModule } from 'src/modules/friends/friend.module'
 import { IdentityModule } from 'src/modules/identity/identity.module'
 import { UserModule } from 'src/modules/users/user.module'
 import { AppController } from './app.controller'
@@ -38,6 +39,7 @@ import { AppService } from './app.service'
     AuthModule,
     IdentityModule,
     UserModule,
+    FriendModule,
   ],
   controllers: [AppController],
   providers: [
