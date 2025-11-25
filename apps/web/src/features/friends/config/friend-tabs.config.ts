@@ -1,7 +1,8 @@
+import { FriendListRequestTable } from '@/features/friends/components/friend-list/friend-list-request-table'
 import { FriendListAddNewForm } from '../components/friend-list/friend-list-add-new-form'
 import { FriendListTable } from '../components/friend-list/friend-list-table'
 
-export type FriendTabId = 'all' | 'add'
+export type FriendTabId = 'all' | 'add' | 'requests'
 
 export interface FriendTab {
   id: FriendTabId
@@ -18,6 +19,11 @@ export const FRIEND_TABS: FriendTab[] = [
     id: 'all',
     label: 'Tous',
     component: FriendListTable,
+  },
+  {
+    id: 'requests',
+    label: 'Demandes',
+    component: FriendListRequestTable,
   },
   {
     id: 'add',
