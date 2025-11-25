@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "jest",
-    "prisma:reset": "prisma migrate reset"
+    "prisma:reset": "prisma migrate reset",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -59,6 +60,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.1"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   },
   "jest": {
     "moduleFileExtensions": [

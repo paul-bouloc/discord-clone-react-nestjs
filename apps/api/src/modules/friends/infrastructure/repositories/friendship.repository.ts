@@ -18,4 +18,41 @@ export class FriendshipRepository {
 
     return friendships.map((friendship) => this.friendshipMapper.toDomain(friendship, { withUsers: true }))
   }
+
+  async upsert(userA: UserId, userB: UserId) {
+    const [user1Id, user2Id] = [userA, userB].sort() as [UserId, UserId]
+    const friendship = await this.prisma.friendship.upsert({
+      where: {
+        user1Id_user2Id: {
+          user1Id,
+          user2Id,
+        },
+      },
+      update: {},
+      create: {
+        user1Id,
+        user2Id,
+      },
+      include: {
+        user1: true,
+        user2: true,
+      },
+    })
+
+    return this.friendshipMapper.toDomain(friendship, { withUsers: true })
+  }
+
+  async existsBetween(userA: UserId, userB: UserId) {
+    const [user1Id, user2Id] = [userA, userB].sort() as [UserId, UserId]
+    const friendship = await this.prisma.friendship.findUnique({
+      where: {
+        user1Id_user2Id: {
+          user1Id,
+          user2Id,
+        },
+      },
+    })
+
+    return Boolean(friendship)
+  }
 }

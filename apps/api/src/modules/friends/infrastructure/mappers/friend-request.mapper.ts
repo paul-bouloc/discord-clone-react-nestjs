@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { FriendRequestStatus, FriendRequest as PrismaFriendRequest, User as PrismaUser } from 'generated/prisma'
+import { FriendRequest as PrismaFriendRequest, User as PrismaUser } from 'generated/prisma'
 import { FriendRequestId, UserId } from 'src/core/types'
 import { FriendRequest } from 'src/modules/friends/domain/types'
 import { UserMapper } from 'src/modules/users/infrastructure/mappers/user.mapper'
@@ -18,7 +18,7 @@ export class FriendRequestMapper {
       friendRequestId: friendRequest.friendRequestId as FriendRequestId,
       requesterId: friendRequest.requesterId as UserId,
       addresseeId: friendRequest.addresseeId as UserId,
-      status: friendRequest.status as FriendRequestStatus,
+      status: friendRequest.status as FriendRequest['status'],
       createdAt: new Date(friendRequest.createdAt),
       updatedAt: new Date(friendRequest.updatedAt),
     }

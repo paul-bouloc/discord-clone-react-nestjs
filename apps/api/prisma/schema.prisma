@@ -14,4 +14,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  userId      String   @id @default(uuid())
+  userName    String   @unique
+  displayName String?
+  email       String   @unique
+  password    String
+  birthDate   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
+  // Relations d'amitié
+  friendshipsAsUser1 Friendship[] @relation("User1Friendships")
+  friendshipsAsUser2 Friendship[] @relation("User2Friendships")
+
+  // Demandes d'amis envoyées
+  sentFriendRequests FriendRequest[] @relation("RequesterFriendRequests")
+
+  // Demandes d'amis reçues
+  receivedFriendRequests FriendRequest[] @relation("AddresseeFriendRequests")
+
+  @@map("users")
+}
+
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+model Friendship {
+  friendshipId String   @id @default(uuid())
+  user1Id      String
+  user2Id      String
+  createdAt    DateTime @default(now())
+
+  user1 User @relation("User1Friendships", fields: [user1Id], references: [userId], onDelete: Cascade)
+  user2 User @relation("User2Friendships", fields: [user2Id], references: [userId], onDelete: Cascade)
+
+  @@unique([user1Id, user2Id])
+  @@map("friendships")
+}
+
+model FriendRequest {
+  friendRequestId String              @id @default(uuid())
+  requesterId     String
+  addresseeId     String
+  status          FriendRequestStatus @default(PENDING)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  requester User @relation("RequesterFriendRequests", fields: [requesterId], references: [userId], onDelete: Cascade)
+  addressee User @relation("AddresseeFriendRequests", fields: [addresseeId], references: [userId], onDelete: Cascade)
+
+  @@unique([requesterId, addresseeId])
+  @@map("friend_requests")
+}
