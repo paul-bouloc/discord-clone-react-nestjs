@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { PrismaModule } from 'src/core/prisma/prisma.module'
+import { DeleteFriendshipUc } from 'src/modules/friends/application/use-cases/delete-friendship.uc'
 import { AcceptFriendRequestUc } from 'src/modules/friends/application/use-cases/friend-requests/accept-friend-request.uc'
 import { CancelFriendRequestUc } from 'src/modules/friends/application/use-cases/friend-requests/cancel-friend-request.uc'
 import { CreateFriendRequestUc } from 'src/modules/friends/application/use-cases/friend-requests/create-friend-request.uc'
@@ -28,6 +29,7 @@ import { FriendshipMapper } from './infrastructure/mappers/friendship.mapper'
     CancelFriendRequestUc,
     AcceptFriendRequestUc,
     RejectFriendRequestUc,
+    DeleteFriendshipUc,
   ],
   exports: [FriendshipMapper, FriendRequestMapper],
 })

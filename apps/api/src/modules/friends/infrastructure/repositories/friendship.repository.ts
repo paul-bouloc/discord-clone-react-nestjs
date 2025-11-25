@@ -19,8 +19,12 @@ export class FriendshipRepository {
     return friendships.map((friendship) => this.friendshipMapper.toDomain(friendship, { withUsers: true }))
   }
 
+  private sortUserIds(userA: UserId, userB: UserId): [UserId, UserId] {
+    return [userA, userB].sort() as [UserId, UserId]
+  }
+
   async upsert(userA: UserId, userB: UserId) {
-    const [user1Id, user2Id] = [userA, userB].sort() as [UserId, UserId]
+    const [user1Id, user2Id] = this.sortUserIds(userA, userB)
     const friendship = await this.prisma.friendship.upsert({
       where: {
         user1Id_user2Id: {
@@ -43,7 +47,7 @@ export class FriendshipRepository {
   }
 
   async existsBetween(userA: UserId, userB: UserId) {
-    const [user1Id, user2Id] = [userA, userB].sort() as [UserId, UserId]
+    const [user1Id, user2Id] = this.sortUserIds(userA, userB)
     const friendship = await this.prisma.friendship.findUnique({
       where: {
         user1Id_user2Id: {
@@ -54,5 +58,17 @@ export class FriendshipRepository {
     })
 
     return Boolean(friendship)
+  }
+
+  async delete(userA: UserId, userB: UserId) {
+    const [user1Id, user2Id] = this.sortUserIds(userA, userB)
+    return this.prisma.friendship.delete({
+      where: {
+        user1Id_user2Id: {
+          user1Id,
+          user2Id,
+        },
+      },
+    })
   }
 }
