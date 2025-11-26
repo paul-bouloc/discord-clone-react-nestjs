@@ -1,5 +1,5 @@
-import { FriendListRequestTable } from '@/features/friends/components/friend-list/friend-list-request-table'
-import { FriendListAddNewForm } from '../components/friend-list/friend-list-add-new-form'
+import { FriendListRequestTable } from '@/features/friends/components/friend-request/friend-list-request-table'
+import { AddFriendForm } from '../components/add-friend-form'
 import { FriendListTable } from '../components/friend-list/friend-list-table'
 
 export type FriendTabId = 'all' | 'add' | 'requests'
@@ -28,7 +28,7 @@ export const FRIEND_TABS: FriendTab[] = [
   {
     id: 'add',
     label: 'Ajouter',
-    component: FriendListAddNewForm,
+    component: AddFriendForm,
     customStyle: {
       selected: 'text-brand-430 bg-brand-500/15 hover:bg-brand-500/15',
       unselected: 'text-white bg-brand-500 hover:bg-brand-560',
