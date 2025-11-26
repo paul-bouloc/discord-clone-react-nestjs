@@ -4,6 +4,7 @@ export interface User {
   userId: UserId
   userName: string
   displayName: string | null
+  avatarUrl: string | null
   email: string
   birthDate: Date
   createdAt: Date
