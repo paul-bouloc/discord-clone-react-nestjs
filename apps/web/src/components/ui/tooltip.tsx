@@ -31,13 +31,13 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          'animate-in fade-in-0 zoom-in-95 border-gray-630 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md border bg-gray-700 px-3 py-2 text-sm font-semibold text-balance text-gray-200',
+          'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 bg-gray-660 text-gray-130 border-gray-560 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md border px-3 py-2 text-sm font-semibold text-balance shadow-lg',
           className,
         )}
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="z-50 size-2.5 translate-x-px translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[3px] border-b border-gray-600 bg-gray-700 fill-gray-700" />
+        <TooltipPrimitive.Arrow className="bg-gray-660 fill-gray-660 border-gray-560 z-50 size-2.5 translate-x-px -translate-y-1/2 rotate-45 rounded-[3px] border-r border-b" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   )

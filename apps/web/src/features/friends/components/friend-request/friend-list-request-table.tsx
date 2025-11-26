@@ -2,7 +2,7 @@ import { FriendListRequestItem } from '@/features/friends/components/friend-requ
 
 export const FriendListRequestTable = () => {
   return (
-    <div>
+    <div className="flex flex-1 flex-col">
       <FriendListRequestItem />
       <FriendListRequestItem />
       <FriendListRequestItem />

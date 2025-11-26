@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 
 interface UserAvatarProps {
-  src?: string
+  src?: string | null
   size?: number
   className?: string
 }
